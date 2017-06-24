@@ -9,9 +9,9 @@ void ATankPlayerController::BeginPlay()
 
 	auto tank = GetControlledTank();
 	if (tank)
-		UE_LOG(LogTemp, Warning, TEXT("Controlled tank %s"), *tank->GetName())
+		UE_LOG(LogTemp, Warning, TEXT("Player controls tank %s"), *tank->GetName())
 	else
-		UE_LOG(LogTemp, Warning, TEXT("Nope"))
+		UE_LOG(LogTemp, Warning, TEXT("Player controns nothing"))
 
 }
 
