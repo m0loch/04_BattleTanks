@@ -14,8 +14,14 @@ class BATTLETANKS_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+public:
+	virtual void Tick(float DeltaTime) override;
+
 private:
 	ATank* GetControlledTank() const;
 
 	void BeginPlay() override;
+
+	// Punta il cannone verso il mirino.
+	void AimTowardsCrosshair();
 };
