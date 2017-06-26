@@ -3,17 +3,17 @@
 #include "BattleTanks.h"
 #include "TankAIController.h"
 
-
-void ATankAIController::BeginPlay() 
+void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+}
 
-	auto tank = GetPlayerTank();
-	if (tank)
-		UE_LOG(LogTemp, Warning, TEXT("I see player controlling tank %s"), *tank->GetName())
-	else
-		UE_LOG(LogTemp, Warning, TEXT("I don't know what player is doing...."))
+// Called every frame
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 
+	AimTowardsPlayer();
 }
 
 ATank* ATankAIController::GetControlledTank() const
@@ -30,4 +30,14 @@ ATank* ATankAIController::GetPlayerTank() const
 	if (!pPC) return nullptr;
 
 	return (ATank*)pPC->GetPawn();
+}
+
+void ATankAIController::AimTowardsPlayer()
+{
+	ATank* pPlayerTank = GetPlayerTank();
+	if ( !pPlayerTank || !GetControlledTank() )
+		return;
+
+	FVector HitLocation;
+	GetControlledTank()->AimAt(pPlayerTank->GetActorLocation());
 }
