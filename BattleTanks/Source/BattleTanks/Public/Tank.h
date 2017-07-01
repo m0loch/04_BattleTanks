@@ -6,20 +6,21 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+class UTankBarrel;
+
 UCLASS()
 class BATTLETANKS_API ATank : public APawn
 {
 	GENERATED_BODY()
 
 public:
-	inline void AimAt(FVector HitLocation)
-	{
-		if (TankAimingComponent)
-			TankAimingComponent->AimAt(HitLocation);
-	}
+	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	double LaunchSpeed = 100000.0; // TODO: Trovare default appropriato...
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;

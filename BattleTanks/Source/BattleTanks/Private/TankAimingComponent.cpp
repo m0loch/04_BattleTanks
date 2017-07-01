@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTanks.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
-
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -12,27 +12,37 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
 
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
+void UTankAimingComponent::AimAt(FVector HitLocation, double LaunchSpeed)
 {
-	Super::BeginPlay();
+	if ( !Barrel )
+		return;
+
+	FVector LaunchVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+
+	if ( UGameplayStatics::SuggestProjectileVelocity(
+					this,
+					LaunchVelocity,
+					StartLocation,
+					HitLocation,
+					LaunchSpeed) )
+	{
+		FVector AimDirection = LaunchVelocity.GetSafeNormal();
+
+		MoveBarrelTowards(AimDirection);
+	}
 }
 
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UTankAimingComponent::MoveBarrelTowards(const FVector &AimDirection)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
+	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
+	FRotator AimAsRotator = AimDirection.Rotation();
+	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
 
-void UTankAimingComponent::AimAt(FVector HitLocation)
-{
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"),
-		*GetOwner()->GetName(),
-		*HitLocation.ToString(),
-		*Barrel->GetComponentLocation().ToString())
+	Barrel->Elevate(5); // TODO: Remove magic number.
 }
