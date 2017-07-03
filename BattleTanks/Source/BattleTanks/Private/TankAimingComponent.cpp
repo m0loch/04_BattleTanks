@@ -30,11 +30,21 @@ void UTankAimingComponent::AimAt(FVector HitLocation, double LaunchSpeed)
 					LaunchVelocity,
 					StartLocation,
 					HitLocation,
-					LaunchSpeed) )
+					LaunchSpeed,
+					false,
+					0.0,
+					0.0,
+					ESuggestProjVelocityTraceOption::DoNotTrace) )
 	{
 		FVector AimDirection = LaunchVelocity.GetSafeNormal();
 
+		UE_LOG(LogTemp, Warning, TEXT("%f: ELEVATING BARREL!!1! AIMING AT %s!!!!!!!"), GetWorld()->GetTimeSeconds(), *AimDirection.ToString());
+
 		MoveBarrelTowards(AimDirection);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%f: No solution found, no elevating"), GetWorld()->GetTimeSeconds());
 	}
 }
 
