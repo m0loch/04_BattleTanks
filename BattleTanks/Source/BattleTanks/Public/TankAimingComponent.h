@@ -6,6 +6,7 @@
 #include "TankAimingComponent.generated.h"
 
 class UTankBarrel;
+class UTankTurret;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANKS_API UTankAimingComponent : public UActorComponent
@@ -17,8 +18,7 @@ public:
 	UTankAimingComponent();
 
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	// TODO: SetTurretReference
+	void SetTurretReference(UTankTurret* TurretToSet);
 
 	void AimAt(FVector HitLocation, double LaunchSpeed);
 
@@ -26,4 +26,5 @@ private:
 	void MoveBarrelTowards(const FVector &AimDirection);
 
 	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
 };
