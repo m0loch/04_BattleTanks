@@ -6,7 +6,7 @@
 #include "TankBarrel.generated.h"
 
 UCLASS(meta=(BlueprintSpawnableComponent))
-class BATTLETANKS_API UTankBarrel : public UStaticMeshComponent
+	class BATTLETANKS_API UTankBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()
 
