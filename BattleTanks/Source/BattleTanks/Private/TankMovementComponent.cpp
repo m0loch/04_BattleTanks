@@ -21,3 +21,15 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 }
+
+void UTankMovementComponent::IntendTurnRight(float Throw)
+{
+	if (!LeftTrack || !RightTrack)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Tracks not properly set."));
+		return;
+	}
+
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(-Throw);
+}
