@@ -48,4 +48,8 @@ private:
 
 	// Puntatore locale usato per sparare.
 	UTankBarrel* Barrel = nullptr;
+
+	// Gestione del cooldown del carro.
+	double LastFireTime = 0.0;
+	double ReloadTimeInSeconds = 3.0;
 };
