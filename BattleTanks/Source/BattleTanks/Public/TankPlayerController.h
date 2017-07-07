@@ -15,14 +15,14 @@ class BATTLETANKS_API ATankPlayerController : public APlayerController
 public:
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	double CrossHairXLocation = 0.5;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	double CrossHairYLocation = 0.333333;
 
-	UPROPERTY(EditAnywhere)
-		double LineTraceRange = 1000000.0;
+	UPROPERTY(EditDefaultsOnly)
+	double LineTraceRange = 1000000.0;
 
 private:
 	ATank* GetControlledTank() const;

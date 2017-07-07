@@ -40,16 +40,18 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	double LaunchSpeed = 4000.0;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
-	TSubclassOf<AProjectile> ProjectileBlueprint;
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	double ReloadTimeInSeconds = 3.0;
 
 	// Puntatore locale usato per sparare.
 	UTankBarrel* Barrel = nullptr;
 
 	// Gestione del cooldown del carro.
 	double LastFireTime = 0.0;
-	double ReloadTimeInSeconds = 3.0;
 };
