@@ -14,4 +14,9 @@ class BATTLETANKS_API ATankAIController : public AAIController
 
 public:
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	// Quanto il carro può avvicinarsi al giocatore. (In centimetri?)
+
+	float AcceptanceRadius = 3000.0;
 };
