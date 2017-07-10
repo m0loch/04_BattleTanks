@@ -24,9 +24,11 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	double LineTraceRange = 1000000.0;
 
-private:
+protected:
+	UFUNCTION(BlueprintCallable, Category = Setup)
 	ATank* GetControlledTank() const;
 
+private:
 	void BeginPlay() override;
 
 	// Punta il cannone verso il mirino.
