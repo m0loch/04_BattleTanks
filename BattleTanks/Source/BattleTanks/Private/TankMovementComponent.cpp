@@ -12,7 +12,7 @@ void UTankMovementComponent::InitTankMovementComponent(UTankTrack* pLeftTrack, U
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!LeftTrack || !RightTrack)
+	if ( !ensure(LeftTrack && RightTrack) )
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Tracks not properly set."));
 		return;
@@ -24,7 +24,7 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
-	if (!LeftTrack || !RightTrack)
+	if ( !ensure(LeftTrack && RightTrack) )
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Tracks not properly set."));
 		return;

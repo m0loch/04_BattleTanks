@@ -15,17 +15,17 @@ ATank::ATank()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	if (TankAimingComponent)
+	if ( ensure(TankAimingComponent) )
 		TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-	else
-		UE_LOG(LogTemp, Warning, TEXT("BABBEO DEL CAZZO"));
 }
 
 void ATank::Fire()
 {
-	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	if ( !ensure(Barrel) )
+		return;
 
-	if ( Barrel && bIsReloaded )
+	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	if ( bIsReloaded )
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),

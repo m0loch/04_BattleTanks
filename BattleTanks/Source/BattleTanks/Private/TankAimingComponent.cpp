@@ -21,7 +21,7 @@ void UTankAimingComponent::InitAimingMovementComponent(UTankBarrel* BarrelToSet,
 
 void UTankAimingComponent::AimAt(FVector HitLocation, double LaunchSpeed)
 {
-	if ( !Barrel )
+	if ( !ensure(Barrel) )
 		return;
 
 	FVector LaunchVelocity;
