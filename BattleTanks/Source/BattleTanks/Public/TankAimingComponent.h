@@ -26,6 +26,10 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	virtual void BeginPlay() override;
+
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void InitAimingComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
@@ -36,7 +40,7 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EAimingStatus AimingStatus = EAimingStatus::Aiming;
+	EAimingStatus AimingStatus = EAimingStatus::Reloading;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
@@ -52,6 +56,11 @@ protected:
 
 private:
 	void MoveBarrelTowards(const FVector &AimDirection);
+
+	bool IsBarrelMoving();
+
+	// Uso interno.
+	FVector AimDirection = FVector(0.0);
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;

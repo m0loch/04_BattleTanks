@@ -11,7 +11,33 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
+}
+
+void UTankAimingComponent::BeginPlay()
+{
+	Super::BeginPlay();
+
+	LastFireTime = FPlatformTime::Seconds();
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	UE_LOG(LogTemp, Warning, TEXT("TICK!"));
+
+	// TODO: Gestione temporanea.
+	if ( (FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds )
+	{
+		AimingStatus = EAimingStatus::Reloading;
+	}
+	else if ( IsBarrelMoving() )
+	{
+		AimingStatus = EAimingStatus::Aiming;
+	}
+	else
+	{
+		AimingStatus = EAimingStatus::Locked;
+	}
 }
 
 void UTankAimingComponent::InitAimingComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
@@ -39,19 +65,17 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 					0.0,
 					ESuggestProjVelocityTraceOption::DoNotTrace) )
 	{
-		FVector AimDirection = LaunchVelocity.GetSafeNormal();
-
+		AimDirection = LaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
 	}
 }
 
 void UTankAimingComponent::Fire()
 {
-	if ( !ensure(Barrel) )
+	if ( !Barrel )
 		return;
 
-	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	if ( bIsReloaded )
+	if ( AimingStatus != EAimingStatus::Reloading )
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),
@@ -69,4 +93,13 @@ void UTankAimingComponent::MoveBarrelTowards(const FVector &AimDirection)
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
 	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
+}
+
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if ( !ensure(Barrel) )
+		return false;
+
+	FVector BarrelForward = Barrel->GetForwardVector();
+	return !BarrelForward.Equals(AimDirection, 0.01);
 }
