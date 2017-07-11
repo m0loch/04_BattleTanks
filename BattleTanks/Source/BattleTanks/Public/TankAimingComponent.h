@@ -26,13 +26,16 @@ public:
 	UTankAimingComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void InitAimingMovementComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+	void InitAimingComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
-	void AimAt(FVector HitLocation, double LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EAimingStatus AimingStatus = EAimingStatus::Aiming;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	double LaunchSpeed = 4000.0;
 
 private:
 	void MoveBarrelTowards(const FVector &AimDirection);

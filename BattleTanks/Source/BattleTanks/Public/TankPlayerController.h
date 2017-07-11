@@ -5,7 +5,6 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h" // MUST be the last include...
 
-class ATank;
 class UTankAimingComponent;
 
 UCLASS()
@@ -26,13 +25,12 @@ public:
 	double LineTraceRange = 1000000.0;
 
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	ATank* GetControlledTank() const;
-
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
+	UTankAimingComponent* GetAimingComponent();
+
 	void BeginPlay() override;
 
 	// Punta il cannone verso il mirino.

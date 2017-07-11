@@ -13,15 +13,15 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UTankAimingComponent::InitAimingMovementComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
+void UTankAimingComponent::InitAimingComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, double LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if ( !ensure(Barrel) )
+	if (!Barrel)
 		return;
 
 	FVector LaunchVelocity;
