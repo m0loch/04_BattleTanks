@@ -25,7 +25,7 @@ public:
 	double LineTraceRange = 1000000.0;
 
 protected:
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
 
 private:
