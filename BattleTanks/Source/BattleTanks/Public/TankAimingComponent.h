@@ -13,6 +13,7 @@ enum class EAimingStatus : uint8
 	Locked,
 };
 
+class AProjectile;
 class UTankBarrel;
 class UTankTurret;
 
@@ -30,12 +31,24 @@ public:
 
 	void AimAt(FVector HitLocation);
 
+	UFUNCTION(BlueprintCallable)
+	void Fire();
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EAimingStatus AimingStatus = EAimingStatus::Aiming;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	double LaunchSpeed = 4000.0;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	double ReloadTimeInSeconds = 3.0;
+
+	// Gestione del cooldown.
+	double LastFireTime = 0.0;
 
 private:
 	void MoveBarrelTowards(const FVector &AimDirection);
