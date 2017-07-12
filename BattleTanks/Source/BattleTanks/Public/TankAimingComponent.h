@@ -37,6 +37,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 
+	EAimingStatus GetAimingStatus() const
+	{ return AimingStatus; }
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EAimingStatus AimingStatus = EAimingStatus::Reloading;

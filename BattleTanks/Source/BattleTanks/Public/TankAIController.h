@@ -1,11 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-UCLASS()
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANKS_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
@@ -13,8 +11,9 @@ class BATTLETANKS_API ATankAIController : public AAIController
 public:
 	virtual void Tick(float DeltaTime) override;
 
-private:
+protected:
 	// Quanto il carro può avvicinarsi al giocatore. (In centimetri?)
 
-	float AcceptanceRadius = 3000.0;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 8000.0;
 };

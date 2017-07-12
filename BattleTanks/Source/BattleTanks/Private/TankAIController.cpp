@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "BattleTanks.h"
 #include "TankAIController.h"
 #include "TankAimingComponent.h"
@@ -22,6 +20,8 @@ void ATankAIController::Tick(float DeltaTime)
 			return;
 
 		TankAimingComponent->AimAt(PlayerTank->GetActorLocation());
-		TankAimingComponent->Fire();
+
+		if ( TankAimingComponent->GetAimingStatus() == EAimingStatus::Locked )
+			TankAimingComponent->Fire();
 	}
 }
