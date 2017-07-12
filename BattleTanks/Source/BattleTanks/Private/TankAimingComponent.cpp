@@ -21,7 +21,12 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	if ( (FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds )
+	if ( AmmoLeft <= 0 )
+	{
+		AimingStatus = EAimingStatus::Empty;
+
+	}
+	else if ( (FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds )
 	{
 		AimingStatus = EAimingStatus::Reloading;
 	}
@@ -70,7 +75,8 @@ void UTankAimingComponent::Fire()
 	if ( !Barrel )
 		return;
 
-	if ( AimingStatus != EAimingStatus::Reloading )
+	if ( (AimingStatus == EAimingStatus::Locked)
+		|| (AimingStatus == EAimingStatus::Aiming) )
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),
@@ -78,6 +84,8 @@ void UTankAimingComponent::Fire()
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+
+		AmmoLeft--;
 	}
 }
 

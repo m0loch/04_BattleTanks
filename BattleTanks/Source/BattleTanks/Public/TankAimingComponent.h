@@ -9,6 +9,7 @@ enum class EAimingStatus : uint8
 	Reloading,
 	Aiming,
 	Locked,
+	Empty,
 };
 
 class AProjectile;
@@ -43,6 +44,9 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EAimingStatus AimingStatus = EAimingStatus::Reloading;
+
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	int AmmoLeft = 3;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
