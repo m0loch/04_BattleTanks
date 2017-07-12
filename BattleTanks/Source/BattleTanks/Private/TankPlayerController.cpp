@@ -7,7 +7,7 @@
 UTankAimingComponent* ATankPlayerController::GetAimingComponent()
 {
 	auto ControlledTank = GetPawn();
-	if ( !ensure(ControlledTank) )
+	if ( !ControlledTank )
 		return nullptr;
 
 	return ControlledTank->FindComponentByClass<UTankAimingComponent>();

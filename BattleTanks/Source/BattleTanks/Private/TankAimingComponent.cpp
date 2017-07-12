@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "BattleTanks.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
@@ -23,9 +21,6 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	UE_LOG(LogTemp, Warning, TEXT("TICK!"));
-
-	// TODO: Gestione temporanea.
 	if ( (FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds )
 	{
 		AimingStatus = EAimingStatus::Reloading;
