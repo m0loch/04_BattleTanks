@@ -2,6 +2,9 @@
 
 #include "BattleTanks.h"
 #include "Projectile.h"
+
+#include "CollisionMesh.h"
+#include "LaunchBlast.h"
 #include "ProjectileMovement.h"
 
 // Sets default values
@@ -9,6 +12,13 @@ AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	CollisionMesh = CreateDefaultSubobject<UCollisionMesh>(FName("Collision Mesh"));
+	SetRootComponent(CollisionMesh);
+	CollisionMesh->SetNotifyRigidBodyCollision(true);
+
+	LaunchBlast = CreateDefaultSubobject<ULaunchBlast>(FName("Launch Blast"));
+	LaunchBlast->AttachTo(RootComponent);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Movement Component"));
 	ProjectileMovement->bAutoActivate = false;

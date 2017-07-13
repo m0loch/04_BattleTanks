@@ -21,7 +21,7 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
-	if ( AmmoLeft <= 0 )
+	if ( StartingAmmo <= 0 )
 	{
 		AimingStatus = EAimingStatus::Empty;
 
@@ -85,7 +85,7 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 
-		AmmoLeft--;
+		StartingAmmo--;
 	}
 }
 

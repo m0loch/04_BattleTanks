@@ -45,9 +45,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EAimingStatus AimingStatus = EAimingStatus::Reloading;
 
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-	int AmmoLeft = 3;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
@@ -56,6 +53,13 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	double ReloadTimeInSeconds = 3.0;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 StartingAmmo = 3;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int32 GetAmmoLeft() const
+	{ return StartingAmmo; }
 
 	// Gestione del cooldown.
 	double LastFireTime = 0.0;
