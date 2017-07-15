@@ -49,4 +49,18 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	ProjectileMovement->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
+
+	// Distruzione del proiettile.
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent(); // Parte "fisica" del proiettile.
+
+	// Dopo X tempo (definito in blueprint) chiama il delegate che distrugge.
+	FTimerHandle TimerHandle;
+
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AProjectile::OnTimerDestroy, DestroyDelay);
+}
+
+void AProjectile::OnTimerDestroy()
+{
+	Destroy();
 }
