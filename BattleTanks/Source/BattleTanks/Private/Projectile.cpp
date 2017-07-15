@@ -54,9 +54,18 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent(); // Parte "fisica" del proiettile.
 
+	// Offriamo danni a chi se li merita.
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius,
+		UDamageType::StaticClass(),
+		TArray<AActor*>() // Nessuno si salverà
+	);
+
 	// Dopo X tempo (definito in blueprint) chiama il delegate che distrugge.
 	FTimerHandle TimerHandle;
-
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AProjectile::OnTimerDestroy, DestroyDelay);
 }
 
