@@ -20,6 +20,4 @@ protected:
 	// Quanto il carro può avvicinarsi al giocatore. (In centimetri?)
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float AcceptanceRadius = 8000.0;
-
-	bool isDead = false;
 };

@@ -8,9 +8,6 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (isDead)
-		return;
-
 	auto PlayerTank     = GetWorld()->GetFirstPlayerController()->GetPawn();
 	auto ControlledTank = GetPawn();
 
@@ -46,6 +43,10 @@ void ATankAIController::SetPawn(APawn* InPawn)
 
 void ATankAIController::OnTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("AI Tank is dead."));
-	isDead = true;
+	auto Tank = GetPawn();
+
+	if (!Tank)
+		return;
+
+	Tank->DetachFromControllerPendingDestroy();
 }
