@@ -12,9 +12,6 @@ class BATTLETANKS_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-public:
-	virtual void Tick(float DeltaTime) override;
-
 	UPROPERTY(EditDefaultsOnly)
 	double CrossHairXLocation = 0.5;
 
@@ -28,10 +25,17 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
+	UFUNCTION()
+	void OnTankDeath();
+
 private:
 	UTankAimingComponent* GetAimingComponent();
 
 	void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
+
+	virtual void SetPawn(APawn* InPawn) override;
 
 	// Punta il cannone verso il mirino.
 	void AimTowardsCrosshair();

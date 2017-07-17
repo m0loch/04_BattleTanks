@@ -5,6 +5,8 @@
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankEvent);
+
 UCLASS()
 class BATTLETANKS_API ATank : public APawn
 {
@@ -12,6 +14,8 @@ class BATTLETANKS_API ATank : public APawn
 
 public:
 	virtual float TakeDamage(float Damage, const FDamageEvent &DamageEvent, AController *EventInstigator, AActor *DamageCauser) override;
+
+	FTankEvent OnDeath;
 
 	// FALSO: in realtà non torna una percentuale, ma un valore fra 0 e 1.
 	UFUNCTION(BlueprintPure, Category = "Health")

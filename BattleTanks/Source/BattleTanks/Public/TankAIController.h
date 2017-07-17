@@ -8,12 +8,18 @@ class BATTLETANKS_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 
-public:
+private:
 	virtual void Tick(float DeltaTime) override;
 
-protected:
-	// Quanto il carro può avvicinarsi al giocatore. (In centimetri?)
+	virtual void SetPawn(APawn* InPawn) override;
 
+protected:
+	UFUNCTION()
+	void OnTankDeath();
+
+	// Quanto il carro può avvicinarsi al giocatore. (In centimetri?)
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float AcceptanceRadius = 8000.0;
+
+	bool isDead = false;
 };

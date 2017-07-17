@@ -18,7 +18,7 @@ float ATank::TakeDamage(float Damage, const FDamageEvent &DamageEvent, AControll
 	CurrentHealth -= DamagePoints;
 	if ( CurrentHealth <= 0 )
 	{
-		UE_LOG(LogTemp, Warning, TEXT("TANK DIED"));
+		OnDeath.Broadcast();
 	}
 
 	return DamagePoints;
