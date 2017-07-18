@@ -96,7 +96,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 	// Calculates the end of the LineTrace.
 	FVector LineEnd = PlayerLocation + (LineTraceRange * LookDirection);
 
-	if ( GetWorld()->LineTraceSingleByChannel(Hit, PlayerLocation, LineEnd, ECC_Visibility) )
+	if ( GetWorld()->LineTraceSingleByChannel(Hit, PlayerLocation, LineEnd, ECC_Camera) )
 	{
 		HitLocation = Hit.Location;
 		return true;
